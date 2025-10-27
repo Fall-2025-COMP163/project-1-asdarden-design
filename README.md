@@ -122,7 +122,7 @@ ChatGPT assisted with the entire code implementation, including function structu
 
 ### How to Run
 
-**Run tests**:
+1. **Run tests**:
 
 python -m pytest tests/test_character_creation.py -v
 
