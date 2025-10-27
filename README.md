@@ -97,3 +97,33 @@ Modifying protected files will result in automatic academic integrity violation
 Implementation (70%): Function correctness, file operations, error handling
 
 Interview (30%): Code explanation and live coding challenge
+
+## 📚 Project Documentation  
+
+### Game Concept  
+Players create characters in a fantasy RPG world with four classes: Warrior, Mage, Rogue, and Cleric. Characters have unique stats and starting gold, can level up, view stats, and save/load progress for story progression.
+
+### Design Choices  
+- Stat formulas designed for clarity and balance:  
+  - Warrior: High strength and health, low magic  
+  - Mage: High magic, low strength, medium health  
+  - Rogue: Medium strength and magic, low health  
+  - Cleric: High magic and moderate strength/health  
+- Gold scales with level to reward progression.  
+- Formulas are consistent across all characters and levels for predictable testing.
+
+### Bonus Creative Features  
+- Gold system scales with level  
+- Level-up recalculates stats automatically  
+- Optional: character backstory or starting equipment for bonus points  
+
+### AI Usage  
+ChatGPT assisted with the entire code implementation, including function structure, stat formulas, file I/O, level-up logic, gold system, and documentation.
+
+### How to Run  
+1. **Run tests**:  
+```bash
+python -m pytest tests/test_character_creation.py -v
+
+2. **run main program**
+python project1_starter.py
