@@ -122,11 +122,13 @@ ChatGPT assisted with the entire code implementation, including function structu
 
 ### How to Run
 
-Run tests:
+**Run tests**:
 
 python -m pytest tests/test_character_creation.py -v
 
 
-Run main program:
+2. **Run main program**:
 
 python project1_starter.py
+
+3. **Follow prompts in the main program to create a character, view stats, save/load, and level up.**
