@@ -120,11 +120,13 @@ Players create characters in a fantasy RPG world with four classes: Warrior, Mag
 ### AI Usage  
 ChatGPT assisted with the entire code implementation, including function structure, stat formulas, file I/O, level-up logic, gold system, and documentation.
 
-### How to Run  
-1. **Run tests**:  
-```bash
+### How to Run
+
+Run tests:
+
 python -m pytest tests/test_character_creation.py -v
 
-2. **run main program**:
-```bash
+
+Run main program:
+
 python project1_starter.py
