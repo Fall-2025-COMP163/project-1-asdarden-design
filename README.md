@@ -126,4 +126,5 @@ ChatGPT assisted with the entire code implementation, including function structu
 python -m pytest tests/test_character_creation.py -v
 
 2. **run main program**:
+```bash
 python project1_starter.py
