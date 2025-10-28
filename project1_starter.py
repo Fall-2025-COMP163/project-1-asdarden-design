@@ -82,19 +82,16 @@ def save_character(character, filename):
         print("Error: Invalid save attempt.")
         return False
 
-    try:
-        with open(filename, "w") as file:
-            file.write("Name: " + character["name"] + "\n")
-            file.write("Class: " + character["class"] + "\n")
-            file.write("Level: " + str(character["level"]) + "\n")
-            file.write("Strength: " + str(character["strength"]) + "\n")
-            file.write("Magic: " + str(character["magic"]) + "\n")
-            file.write("Health: " + str(character["health"]) + "\n")
-            file.write("Gold: " + str(character["gold"]) + "\n")
-        return True
-    except FileNotFoundError:
-        print("Error: Directory not found.")
-        return False
+    file = open(filename, "w")
+    file.write("Name: " + character["name"] + "\n")
+    file.write("Class: " + character["class"] + "\n")
+    file.write("Level: " + str(character["level"]) + "\n")
+    file.write("Strength: " + str(character["strength"]) + "\n")
+    file.write("Magic: " + str(character["magic"]) + "\n")
+    file.write("Health: " + str(character["health"]) + "\n")
+    file.write("Gold: " + str(character["gold"]) + "\n")
+    file.close()
+    return True
         
 def load_character(filename):
     """
