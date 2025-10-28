@@ -1,6 +1,5 @@
 """
 COMP 163 - Project 1: Character Creator & Saving/Loading
-Name: Anzino Darden
 Date: 10/27/2025
 
 AI Usage: ChatGPT assisted with function structure, stat formulas, file I/O, level-up logic, gold system, 
@@ -26,10 +25,6 @@ def create_character(name, character_class):
     char = create_character("Aria", "Mage")
     # Should return: {"name": "Aria", "class": "Mage", "level": 1, "strength": 5, "magic": 15, "health": 80, "gold": 100}
     """
-    # TODO: Implement this function
-    # Remember to use calculate_stats() function for stat calculation
-    pass
-    
     valid_classes = ["Warrior", "Mage", "Rogue", "Cleric"]
     
     if character_class not in valid_classes:
@@ -64,10 +59,6 @@ def calculate_stats(character_class, level):
     - Formulas scale with level
     - Only allowed classes: Warrior, Mage, Rogue, Cleric
     """
-    # TODO: Implement this function
-    # Return a tuple: (strength, magic, health)
-    pass
-
     if character_class == "Warrior":
         strength = 10 + level * 4
         magic = 2 + level * 1
@@ -107,55 +98,45 @@ def save_character(character, filename):
     Health: [health]
     Gold: [gold]
     """
-    # TODO: Implement this function
-    # Remember to handle file errors gracefully
-    pass
-
-    try:
-        with open(filename, "w") as file:
-            file.write(f"Character Name: {character['name']}\n")
-            file.write(f"Class: {character['class']}\n")
-            file.write(f"Level: {character['level']}\n")
-            file.write(f"Strength: {character['strength']}\n")
-            file.write(f"Magic: {character['magic']}\n")
-            file.write(f"Health: {character['health']}\n")
-            file.write(f"Gold: {character['gold']}\n")
-        return True
-    except PermissionError:
-        print("Error: Permission denied. Cannot save file.")
+    if character is None or filename == "":
+        print("Error: Invalid save attempt.")
         return False
+
+    with open(filename, "w") as file:
+        file.write("Name: " + character["name"] + "\n")
+        file.write("Class: " + character["class"] + "\n")
+        file.write("Level: " + str(character["level"]) + "\n")
+        file.write("Strength: " + str(character["strength"]) + "\n")
+        file.write("Magic: " + str(character["magic"]) + "\n")
+        file.write("Health: " + str(character["health"]) + "\n")
+        file.write("Gold: " + str(character["gold"]) + "\n")
+    return True
         
 def load_character(filename):
     """
     Loads character from text file
     Returns: character dictionary if successful, None if file not found
     """
-    # TODO: Implement this function
-    # Remember to handle file not found errors
-    pass
-
-    try:
-        with open(filename, "r") as file:
-            lines = file.readlines()
-
-        character = {}
-        for line in lines:
-            if ": " in line:
-                key, value = line.strip().split(": ", 1)
-                character[key.lower().replace(" ", "_")] = value
-
-        # Convert numeric fields to int
-        for key in ["level", "strength", "magic", "health", "gold"]:
-            if key in character:
-                character[key] = int(character[key])
-
-        return character
-    except FileNotFoundError:
+    if not os.path.exists(filename):
         print("Error: File not found.")
         return None
-    except PermissionError:
-        print("Error: Permission denied when reading file.")
-        return None
+
+    character = {}
+    with open(filename, "r") as file:
+        lines = file.readlines()
+
+    for line in lines:
+        parts = line.strip().split(": ")
+        if len(parts) == 2:
+            key = parts[0].lower()
+            value = parts[1]
+            if key in ["level", "strength", "magic", "health", "gold"]:
+                value = int(value)
+            if key == "name":
+                character["name"] = value
+            else:
+                character[key] = value
+    return character
 
 def display_character(character):
     """
@@ -172,9 +153,6 @@ def display_character(character):
     Health: 80
     Gold: 100
     """
-    # TODO: Implement this function
-    pass
-
     print("\n=== CHARACTER SHEET ===")
     print(f"Name: {character['name']}")
     print(f"Class: {character['class']}")
@@ -191,20 +169,28 @@ def level_up(character):
     Modifies the character dictionary directly
     Returns: None
     """
-    # TODO: Implement this function
-    # Remember to recalculate stats for the new level
-    pass
-
     character["level"] += 1
-    strength, magic, health, gold = calculate_stats(character["class"], character["level"])
+    strength, magic, health, gold_base = calculate_stats(character["class"], character["level"])
     character["strength"] = strength
     character["magic"] = magic
     character["health"] = health
-    character["gold"] = gold
+    # Preserve previously collected gold
+    character["gold"] = character["gold"]
 
+# Bonus creative feature
+def random_treasure(character):
+    """
+    Adds a random gold bonus between 10 and 100.
+    """
+    # Simple pseudo-random using level for variability without import
+    bonus = (character["level"] * 37) % 91 + 10  # deterministic, no import
+    character["gold"] += bonus
+    print(character["name"], "found a treasure chest with", bonus, "gold!")
+    
 # Main program area (optional - for testing your functions)
 if __name__ == "__main__":
     print("=== CHARACTER CREATOR ===")
+    print("Test your functions here!")
     char = create_character("TestHero", "Warrior")
     if char:
         display_character(char)
