@@ -82,8 +82,14 @@ def save_character(character, filename):
         print("Error: Invalid save attempt.")
         return False
 
+    # Check if directory exists
+    directory = os.path.dirname(filename)
+    if directory != "" and not os.path.exists(directory):
+        print("Error: Directory does not exist.")
+        return False
+
     file = open(filename, "w")
-    file.write("Name: " + character["name"] + "\n")
+    file.write("Character Name: " + character["name"] + "\n")
     file.write("Class: " + character["class"] + "\n")
     file.write("Level: " + str(character["level"]) + "\n")
     file.write("Strength: " + str(character["strength"]) + "\n")
@@ -98,6 +104,7 @@ def load_character(filename):
     Loads character from text file.
     Returns: character dictionary if successful, None if file not found or invalid.
     """
+    # Check if file exists
     if not os.path.exists(filename):
         print("Error: File not found.")
         return None
@@ -107,15 +114,39 @@ def load_character(filename):
     lines = file.readlines()
     file.close()
 
+    # Parse each line
     for line in lines:
         parts = line.strip().split(": ")
         if len(parts) == 2:
-            key = parts[0].lower()
-            value = parts[1]
-            if key in ["level", "strength", "magic", "health", "gold"]:
+            key_label = parts[0].strip()
+            value = parts[1].strip()
+
+            # Map label to dictionary key
+            if key_label == "Character Name":
+                key = "name"
+            elif key_label == "Class":
+                key = "class"
+            elif key_label == "Level":
+                key = "level"
                 value = int(value)
+            elif key_label == "Strength":
+                key = "strength"
+                value = int(value)
+            elif key_label == "Magic":
+                key = "magic"
+                value = int(value)
+            elif key_label == "Health":
+                key = "health"
+                value = int(value)
+            elif key_label == "Gold":
+                key = "gold"
+                value = int(value)
+            else:
+                continue  # skip unknown lines
+
             character[key] = value
 
+    # Ensure all required keys are present
     required_keys = ["name", "class", "level", "strength", "magic", "health", "gold"]
     for key in required_keys:
         if key not in character:
