@@ -135,4 +135,4 @@ ChatGPT assisted with the entire code implementation, including function structu
    ```bash
 python project1_starter.py
 
-3. #**Follow prompts in the main program to create a character, view stats, save/load progress, and level up.**:
+3. **Follow prompts in the main program to create a character, view stats, save/load progress, and level up.**:
