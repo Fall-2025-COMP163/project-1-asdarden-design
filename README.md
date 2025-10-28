@@ -101,34 +101,37 @@ Interview (30%): Code explanation and live coding challenge
 ## 📚 Project Documentation  
 
 ### Game Concept  
-Players create characters in a fantasy RPG world with four classes: Warrior, Mage, Rogue, and Cleric. Characters have unique stats and starting gold, can level up, view stats, and save/load progress for story progression.
+Players create characters in a fantasy RPG world with four classes: Warrior, Mage, Rogue, and Cleric. Characters have unique stats and starting gold, can level up, view stats, and save/load progress for story progression. The game focuses on simple text-based interaction and character progression to demonstrate file I/O and function design.
 
 ### Design Choices  
 - Stat formulas designed for clarity and balance:  
-  - Warrior: High strength and health, low magic  
-  - Mage: High magic, low strength, medium health  
-  - Rogue: Medium strength and magic, low health  
-  - Cleric: High magic and moderate strength/health  
-- Gold scales with level to reward progression.  
-- Formulas are consistent across all characters and levels for predictable testing.
+  - **Warrior:** High strength and health, low magic  
+  - **Mage:** High magic, low strength, medium health  
+  - **Rogue:** Medium strength and magic, low health  
+  - **Cleric:** High magic and moderate strength/health  
+- Stats scale by level for consistent progression.  
+- Gold also scales with level to reward player advancement.  
+- All calculations are formula-based for predictable testing.
 
 ### Bonus Creative Features  
-- Gold system scales with level  
-- Level-up recalculates stats automatically  
-- Optional: character backstory or starting equipment for bonus points  
+- Gold system scales dynamically with level  
+- Level-up automatically recalculates all stats  
+- Bonus function for additional gold tracking and management  
+- Optional story hooks for future narrative expansion  
 
 ### AI Usage  
-ChatGPT assisted with the entire code implementation, including function structure, stat formulas, file I/O, level-up logic, gold system, and documentation.
+ChatGPT assisted with the entire code implementation, including function structure, stat formulas, file I/O, level-up logic, gold system, and documentation.  
 
-### How to Run
+### How to Run  
 
-1. **Run tests**:
-
+1. **Run tests:**
+```bash
 python -m pytest tests/test_character_creation.py -v
+```
 
-
-2. **Run main program**:
-
+2. **Run main program:**
+```bash
 python project1_starter.py
+```
 
-3. **Follow prompts in the main program to create a character, view stats, save/load, and level up.**
+3. **Follow prompts in the main program to create a character, view stats, save/load progress, and level up.**
