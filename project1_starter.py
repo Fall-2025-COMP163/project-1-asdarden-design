@@ -1,10 +1,11 @@
 """
-COMP 163 - Project 1: Character Creator & Saving/Loading
+COMP 163 - Project 1: Character Creator & Chronicles
 Date: 10/27/2025
 
 AI Usage: ChatGPT assisted with function structure, stat formulas, file I/O, level-up logic, gold system, 
-error handling, comments, and example main block for testing throughout all of the code
+error handling, comments, and example main block for testing throughout all of the code.
 """
+
 import os
 
 def create_character(name, character_class):
@@ -33,7 +34,7 @@ def create_character(name, character_class):
         return None
 
     level = 1  # All new characters start at level 1
-    strength, magic, health, gold = calculate_stats(character_class, level)
+    strength, magic, health = calculate_stats(character_class, level)
 
     character = {
         "name": name,
@@ -42,7 +43,7 @@ def create_character(name, character_class):
         "strength": strength,
         "magic": magic,
         "health": health,
-        "gold": gold
+        "gold": 100  # Starting gold
     }
     return character
 
@@ -50,73 +51,55 @@ def calculate_stats(character_class, level):
     """
     Calculates base stats based on class and level
     Returns: tuple of (strength, magic, health)
-    
-    Design your own formulas! Ideas:
-    - Warriors: High strength, low magic, high health
-    - Mages: Low strength, high magic, medium health  
-    - Rogues: Medium strength, medium magic, low health
-    - Clerics: Medium strength, high magic, high health
-        Notes:
-    - Formulas scale with level
-    - Only allowed classes: Warrior, Mage, Rogue, Cleric
     """
     if character_class == "Warrior":
         strength = 10 + level * 4
         magic = 2 + level * 1
         health = 25 + level * 5
-        gold = 100 + level * 10
     elif character_class == "Rogue":
         strength = 7 + level * 3
         magic = 4 + level * 2
         health = 20 + level * 4
-        gold = 120 + level * 12
     elif character_class == "Mage":
         strength = 3 + level * 1
         magic = 12 + level * 4
         health = 18 + level * 3
-        gold = 80 + level * 8
     elif character_class == "Cleric":
         strength = 5 + level * 2
         magic = 10 + level * 3
         health = 22 + level * 4
-        gold = 90 + level * 9
     else:
-        strength = magic = health = gold = 0
+        strength = magic = health = 0
 
-    return strength, magic, health, gold
+    return strength, magic, health
 
 def save_character(character, filename):
     """
-    Saves character to text file in specific format
-    Returns: True if successful, False if error occurred
-    
-    Required file format:
-    Character Name: [name]
-    Class: [class]
-    Level: [level]
-    Strength: [strength]
-    Magic: [magic]
-    Health: [health]
-    Gold: [gold]
+    Saves character to text file in specific format.
+    Returns: True if successful, False if error occurred.
     """
     if character is None or filename == "":
         print("Error: Invalid save attempt.")
         return False
 
-    with open(filename, "w") as file:
-        file.write("Name: " + character["name"] + "\n")
-        file.write("Class: " + character["class"] + "\n")
-        file.write("Level: " + str(character["level"]) + "\n")
-        file.write("Strength: " + str(character["strength"]) + "\n")
-        file.write("Magic: " + str(character["magic"]) + "\n")
-        file.write("Health: " + str(character["health"]) + "\n")
-        file.write("Gold: " + str(character["gold"]) + "\n")
-    return True
+    try:
+        with open(filename, "w") as file:
+            file.write("Name: " + character["name"] + "\n")
+            file.write("Class: " + character["class"] + "\n")
+            file.write("Level: " + str(character["level"]) + "\n")
+            file.write("Strength: " + str(character["strength"]) + "\n")
+            file.write("Magic: " + str(character["magic"]) + "\n")
+            file.write("Health: " + str(character["health"]) + "\n")
+            file.write("Gold: " + str(character["gold"]) + "\n")
+        return True
+    except FileNotFoundError:
+        print("Error: Directory not found.")
+        return False
         
 def load_character(filename):
     """
-    Loads character from text file
-    Returns: character dictionary if successful, None if file not found
+    Loads character from text file.
+    Returns: character dictionary if successful, None if file not found or invalid.
     """
     if not os.path.exists(filename):
         print("Error: File not found.")
@@ -133,26 +116,21 @@ def load_character(filename):
             value = parts[1]
             if key in ["level", "strength", "magic", "health", "gold"]:
                 value = int(value)
-            if key == "name":
-                character["name"] = value
-            else:
-                character[key] = value
+            character[key] = value
+
+    # Ensure required keys exist
+    required_keys = ["name", "class", "level", "strength", "magic", "health", "gold"]
+    for key in required_keys:
+        if key not in character:
+            print(f"Error: Missing key '{key}' in character file.")
+            return None
+
     return character
 
 def display_character(character):
     """
-    Prints formatted character sheet
-    Returns: None (prints to console)
-    
-    Example output:
-    === CHARACTER SHEET ===
-    Name: Aria
-    Class: Mage
-    Level: 1
-    Strength: 5
-    Magic: 15
-    Health: 80
-    Gold: 100
+    Prints formatted character sheet.
+    Returns: None (prints to console).
     """
     print("\n=== CHARACTER SHEET ===")
     print(f"Name: {character['name']}")
@@ -166,25 +144,22 @@ def display_character(character):
 
 def level_up(character):
     """
-    Increases character level and recalculates stats
-    Modifies the character dictionary directly
-    Returns: None
+    Increases character level and recalculates stats.
+    Modifies the character dictionary directly.
     """
     character["level"] += 1
-    strength, magic, health, gold_base = calculate_stats(character["class"], character["level"])
+    strength, magic, health = calculate_stats(character["class"], character["level"])
     character["strength"] = strength
     character["magic"] = magic
     character["health"] = health
-    # Preserve previously collected gold
-    character["gold"] = character["gold"]
+    character["gold"] += character["level"] * 10  # Increment gold
 
-# Bonus creative feature
 def random_treasure(character):
     """
     Adds a random gold bonus between 10 and 100.
     """
-    # Simple pseudo-random using level for variability without import
-    bonus = (character["level"] * 37) % 91 + 10  # deterministic, no import
+    import random
+    bonus = random.randint(10, 100)
     character["gold"] += bonus
     print(character["name"], "found a treasure chest with", bonus, "gold!")
     
@@ -201,8 +176,3 @@ if __name__ == "__main__":
             display_character(loaded)
         level_up(char)
         display_character(char)
-    # Example usage:
-    # char = create_character("TestHero", "Warrior")
-    # display_character(char)
-    # save_character(char, "my_character.txt")
-    # loaded = load_character("my_character.txt")
