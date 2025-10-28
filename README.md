@@ -98,10 +98,10 @@ Implementation (70%): Function correctness, file operations, error handling
 
 Interview (30%): Code explanation and live coding challenge
 
-## 📚 Project Documentation  
+## 📚 Project Documentation
 
 ### Game Concept  
-Players create characters in a fantasy RPG world with four classes: Warrior, Mage, Rogue, and Cleric. Characters have unique stats and starting gold, can level up, view stats, and save/load progress for story progression. The game focuses on simple text-based interaction and character progression to demonstrate file I/O and function design.
+Players create characters in a fantasy RPG world with four classes: Warrior, Mage, Rogue, and Cleric. Characters have unique stats and starting gold, can level up, view stats, and save/load progress.
 
 ### Design Choices  
 - Stat formulas designed for clarity and balance:  
@@ -111,13 +111,16 @@ Players create characters in a fantasy RPG world with four classes: Warrior, Mag
   - **Cleric:** High magic and moderate strength/health  
 - Stats scale by level for consistent progression.  
 - Gold also scales with level to reward player advancement.  
-- All calculations are formula-based for predictable testing.
+- All calculations are formula-based for predictable testing.  
+- Robust error handling ensures invalid inputs and missing files are managed gracefully.  
+- The `load_character` function validates that all mandatory fields (e.g., name, class, level) are present in the saved file.
 
 ### Bonus Creative Features  
-- Gold system scales dynamically with level  
-- Level-up automatically recalculates all stats  
-- Bonus function for additional gold tracking and management  
-- Optional story hooks for future narrative expansion  
+- Gold system scales dynamically with level.  
+- Level-up recalculates stats and dynamically increases gold as the character progresses.  
+- Bonus function for additional gold tracking and management:  
+  - `random_treasure(character)` - Adds a random gold bonus between 10 and 100.  
+- Optional story hooks for future narrative expansion.  
 
 ### AI Usage  
 ChatGPT assisted with the entire code implementation, including function structure, stat formulas, file I/O, level-up logic, gold system, and documentation.  
@@ -125,12 +128,11 @@ ChatGPT assisted with the entire code implementation, including function structu
 ### How to Run  
 
 1. **Run tests:**
-```bash
-python -m pytest tests/test_character_creation.py -v
-```
+   ```bash
+   python -m pytest tests/test_character_creation.py -v
 
 2. **Run main program:**
-```bash
+   ```bash
 python project1_starter.py
 ```
 
