@@ -5,6 +5,7 @@ Date: 10/27/2025
 AI Usage: ChatGPT assisted with function structure, stat formulas, file I/O, level-up logic, gold system, 
 error handling, comments, and example main block for testing throughout all of the code
 """
+import os
 
 def create_character(name, character_class):
     """
