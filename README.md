@@ -130,9 +130,9 @@ ChatGPT assisted with the entire code implementation, including function structu
 1. **Run tests:**
    ```bash
    python -m pytest tests/test_character_creation.py -v
-
+```
 2. **Run main program:**
    ```bash
 python project1_starter.py
-
+```
 3. **Follow prompts in the main program to create a character, view stats, save/load progress, and level up.**:
