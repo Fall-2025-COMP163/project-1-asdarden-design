@@ -106,8 +106,9 @@ def load_character(filename):
         return None
 
     character = {}
-    with open(filename, "r") as file:
-        lines = file.readlines()
+    file = open(filename, "r")
+    lines = file.readlines()
+    file.close()
 
     for line in lines:
         parts = line.strip().split(": ")
@@ -118,7 +119,6 @@ def load_character(filename):
                 value = int(value)
             character[key] = value
 
-    # Ensure required keys exist
     required_keys = ["name", "class", "level", "strength", "magic", "health", "gold"]
     for key in required_keys:
         if key not in character:
